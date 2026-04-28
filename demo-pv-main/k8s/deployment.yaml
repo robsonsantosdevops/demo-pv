@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-pv-front
+  namespace: demo
+  labels:
+    app: demo-pv-front
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-pv-front
+  template:
+    metadata:
+      labels:
+        app: demo-pv-front
+    spec:
+      containers:
+        - name: demo-pv-front
+          image: demokeeggo.azurecr.io/demokeeggo/demo-pv-front:15618
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+              name: http
+          env:
+            - name: NODE_ENV
+              value: production
+            - name: PORT
+              value: "3000"
+            # Logstash: porta deve ser a do input TCP no pipeline (ex.: 5000 ou 28777)
+            - name: LOGSTASH_HOST
+              value: "logstash.elk.svc.cluster.local"
+            - name: LOGSTASH_PORT
+              value: "5000"
+            - name: ELASTIC_APM_SERVER_URL
+              value: "http://apm-server.elk.svc.cluster.local:8200"
+            - name: ELASTIC_APM_SERVICE_NAME
+              value: "demo-pv"
+            # RUM e API em runtime (obrigatório para trace no Service Map)
+            # API_PUBLIC_URL: URL que o BROWSER usa para a API (ex.: https://test-demo.keeggo.com/api)
+            - name: API_PUBLIC_URL
+              value: "https://test-demo.keeggo.com/api"
+            # APM_SERVER_PUBLIC_URL: URL do APM Server acessível pelo BROWSER (ingress); se vazio, RUM não envia
+            - name: APM_SERVER_PUBLIC_URL
+              value: ""
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: 3000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: 3000
+            initialDelaySeconds: 10
+            periodSeconds: 5
+      imagePullSecrets:
+        - name: acr-secret

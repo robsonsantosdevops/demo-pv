@@ -1,0 +1,31 @@
+# Ingress para demo-pv-front (namespace demo).
+# Requer Ingress Controller (ex: NGINX, Application Gateway no AKS).
+# Aplique: kubectl apply -f k8s/ingress.yaml -n demo
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: demo-pv-front
+  namespace: demo
+  labels:
+    app: demo-pv-front
+  # annotations para AKS Application Gateway (opcional):
+  #   kubernetes.io/ingress.class: azure/application-gateway
+  #   appgw.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: test-demo.keeggo.com  # altere para seu domínio
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: demo-pv-front
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - test-demo.keeggo.com
+      secretName: keeggo-server-tls
