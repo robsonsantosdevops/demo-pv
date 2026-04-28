@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sb-middleware-config
+  namespace: demo
+  labels:
+    app.kubernetes.io/name: sb-middleware
+    app.kubernetes.io/component: middleware
+data:
+  LOG_LEVEL: "INFO"
+  HEALTH_PORT: "8080"
+  SB_MAX_WAIT_TIME: "5"
+  SB_MAX_MESSAGE_COUNT: "10"
+  SSL_VERIFY: "false"
+  SAP_HTTP_TIMEOUT: "30"
+  SAP_DEFAULT_CARDCODE: "C40000"
+  SAP_DEFAULT_ITEM_CODE: "S10000"
+  SAP_DEFAULT_BPL_ID: "1"
+  SF_API_VERSION: "v60.0"
+  SF_HTTP_TIMEOUT: "30"
+  # Sandbox: https://test.salesforce.com — ajuste para produção se necessário
+  SF_LOGIN_URL: "https://test.salesforce.com"

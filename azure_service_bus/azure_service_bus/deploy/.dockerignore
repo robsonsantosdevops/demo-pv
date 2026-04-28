@@ -1,0 +1,41 @@
+
+# Segredos e dados locais
+.env
+.env.*
+!.env.example
+logs/*
+
+# VCS e tooling
+.git/
+.gitignore
+.claude/
+
+# Código que não precisa dentro do container
+tests/
+docs/
+scripts/
+deploy/
+PLAN.md
+README.md
+
+# Artefatos Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Ambientes virtuais
+.venv/
+venv/
+env/
+
+# IDEs e SO
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db

@@ -1,0 +1,5 @@
+-- Este ficheiro foi fundido em init.sql (esquema unificado para poliedro_db).
+-- Use apenas: db/init.sql
+--
+-- Histórico: init1.sql tinha correlation_id em pedidos, curso_id VARCHAR em pedido_itens
+-- e default de pagamentos.status = 'aprovado'. Tudo está refletido em init.sql.
