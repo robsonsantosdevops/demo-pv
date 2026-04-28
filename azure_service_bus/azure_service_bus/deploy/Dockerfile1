@@ -77,8 +77,7 @@ USER mw
 
 EXPOSE 8080
 
-# QUEUE_NAME não tem default — precisa vir do deployment
-# (pedidos|contatos|oportunidades|relatorios).
+# QUEUE_NAME não tem default — precisa vir do deployment (pedidos|oportunidades).
 # Healthcheck bate no endpoint liveness do próprio middleware (health.py).
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
   CMD curl --fail --silent --max-time 4 http://localhost:${HEALTH_PORT}/healthz || exit 1
