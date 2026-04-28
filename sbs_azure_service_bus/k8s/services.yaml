@@ -1,0 +1,66 @@
+# Um Service ClusterIP por deployment — porta 8080 (health /ready e /healthz).
+# Útil para probes internos, port-forward e diagnóstico entre pods.
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sb-middleware-pedidos
+  namespace: demo
+  labels:
+    app.kubernetes.io/name: sb-middleware-pedidos
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: sb-middleware-pedidos
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sb-middleware-contatos
+  namespace: demo
+  labels:
+    app.kubernetes.io/name: sb-middleware-contatos
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: sb-middleware-contatos
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sb-middleware-oportunidades
+  namespace: demo
+  labels:
+    app.kubernetes.io/name: sb-middleware-oportunidades
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: sb-middleware-oportunidades
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sb-middleware-relatorios
+  namespace: demo
+  labels:
+    app.kubernetes.io/name: sb-middleware-relatorios
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: sb-middleware-relatorios
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http

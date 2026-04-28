@@ -1,0 +1,23 @@
+# Uso: a partir desta pasta
+#   kubectl apply -k .
+#
+# Antes: criar o Secret sb-middleware-secrets no namespace demo (ver README.md).
+# Imagem: ajuste newName/newTag abaixo ou passe --image ao deploy.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: demo
+
+resources:
+  - namespace.yaml
+  - configmap.yaml
+  - deployment-pedidos.yaml
+  - deployment-contatos.yaml
+  - deployment-oportunidades.yaml
+  - deployment-relatorios.yaml
+  - services.yaml
+
+images:
+  - name: sb-middleware
+    newName: demokeeggo.azurecr.io/demokeeggo/sb-middleware
+    newTag: latest
